@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="100 points pour gagner le jeu de dés où 2 joueurs s'affrontent">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="style.css">
+  <title>100 points pour gagner</title>
+</head>
+
+
+  
+  
+
+<body>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#rulesModal">
+  <i class="bi bi-dice-6"> Règles du jeu </i>
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Règles du jeu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Le jeu comprend 2 joueurs sur un seul et même écran.
+          Chaque joueur possède un score temporaire (ROUND) et un score global (GLOBAL).
+          À chaque tour, le joueur a son ROUND initialisé à 0 et peut lancer un dé autant de fois qu'il le souhaite. Le
+          résultat d’un lancer est ajouté au ROUND.</p>
+        <p>Lors de son tour, le joueur peut décider à tout moment de: <br>
+          - Cliquer sur l’option “Hold”, qui permet d’envoyer les points du ROUND vers le GLOBAL. Ce sera alors le tour de l’autre joueur. <br>
+          - Lancer le dé. S’il obtient un 1, son score ROUND est perdu et c’est la fin de son tour.</p>
+        <p>Le premier joueur qui atteint les 100 points sur global gagne le jeu.</p>    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <audio
+    controls
+    src="/images/simpsons.mp3" autoplay>
+        Your browser does not support the
+        <code>audio</code> element.
+    </audio>  -->
+
+<div>
+  <audio src="/images/simpsons.mp3"></audio>   
+<button type="button" id="buttonSoundOn" i class="bi bi-volume-up"></i></button>
+<button type="button" id="buttonSoundOff" i class="bi bi-volume-mute"></i></button>
+</div>
+
+
+
+
+<!--
+  <div class="row">
+      <div class="col-md-6">
+        <a class="btn btn-danger" id="Rules" role="button"> Règles du jeu</a>
+        <br>
+        <br>
+      </div>
+      <div class="col-md-6">
+        <audio controls="controls" loop="loop" autoplay="autoplay">
+          <source src="./images/simpsons.mp3">
+        </audio>
+      </div>
+  </div>
+  <br>
+  <br>
+-->
+
+<main class="text-center py-5 px-md-3 py-md-4 container-fluid d-flex flex-column flex-md-row justify-content-evenly rounded-3 shadow-lg">
+
+<!-- Section PLAYER 1 -->
+<section id="sectionPlayer1" class="row flex-md-column justify-content-evenly align-items-center">
+<div class="col-5 col-sm-3 col-md-12">
+<!-- PLAYER 1 LABEL -->
+<h2 id="player1" class="m-0">PLAYER 1</h2>
+<img span src="./images/photo Homer.jpeg" alt="Homer">
+<!-- row for PLAYER 1 GLOBAL SCORE -->
+<h2 id="player1GlobalScore" class="global-score m-0 text-danger">43</h2>
+</div>
+<!-- row for PLAYER 1 CURRENT SCORE -->
+<div class="box col-4 bg-danger d-flex flex-column justify-content-center">
+<h4 class="m-0 mt-2">CURRENT</h4>
+<p id="player1CurrentScore" class="text-light m-0">11</p>
+</div>
+</section>
+
+<!-- section dice and buttons -->
+<section class="row flex-md-column justify-content-md-start my-5">
+    <!-- New Game button -->
+    <div class="m-0 col-12">
+    <h3 id="newGame" type="button" class="m-0"><i class="bi-plus-circle text-danger"></i>
+    NEW GAME
+    </h3>
+    
+    </div>
+    <!-- dice -->
+    <div class="d-md-flex flex-fill justify-content-md-center align-items-md-center col-12 my-3 my-md-0 pt-md-3">
+      <div type="button">
+        <audio src="/images/sound.mp3" id="SoundDe"></audio>  
+          <img src="./images/face3.png" id="ImageDe" alt="image d'une face de dé">
+          <img src="./images/face1.png" id="ImageDe" alt="image d'une face de dé">
+        <p id="total"></p>
+      </div>
+    </div>
+    <!-- Roll and Hold buttons -->
+    <div
+    class="col-12 d-flex flex-fill flex-md-column justify-content-around justify-content-md-center mb-md-5">
+    <h3 id="rollDice" type="button" class="m-0" onclick="roll()"> 
+    <i class="pe-1 bi bi-arrow-repeat text-danger"></i>
+    ROLL DICE
+    </h3>
+    <br>
+    <h3 id="holdBtn" type="button" class="m-0">
+    <i class="pe-1 bi bi-box-arrow-in-down text-danger"></i>
+    HOLD
+    </h3>
+    </div>
+    </section>
+    
+    <!-- Section PLAYER 2 -->
+<section class="row flex-md-column justify-content-evenly align-items-center">
+    <div class="col-5 col-sm-3 col-md-12">
+    <!-- PLAYER 2 LABEL -->
+    <h2 id="player2" class="m-0">PLAYER 2</h2>
+    <img span src="./images/M. BURNS.jpeg" alt="M. Burns">
+    <!-- row for PLAYER 2 GLOBAL SCORE -->
+    <h2 id="player2GlobalScore" class="global-score m-0 text-danger">72</h2>
+    </div>
+    <!-- row for PLAYER 2 CURRENT SCORE -->
+    <div class="box col-4 d-flex flex-column justify-content-center bg-danger">
+    <h4 class="m-0 mt-2">CURRENT</h4>
+    <p id="player2CurrentScore" class="text-light m-0">0</p>
+    </div>
+    </section>
+    
+    </main>
+    
+
+
+
+
+
+
+
+<!--
+<div class="row">
+  <div class="col-md-12 text-center pt-30">
+    <img span src="./images/photo Homer.jpeg" id="PlayerOne" alt="Homer">
+      <div class="globalPlayerOne">
+        <p><i>SCORE HOMER</i></p>
+        <p id="GLOBAL">0</p>
+      </div>
+      <div class="roundPlayerOne">
+        <p class="pRound">Point</p>
+        <div id="roundPlayerOne">0</div>
+      </div>
+  </div>
+</div>
+<br>
+<br>  
+
+<div class="row">
+  <div class="col-md-12">
+    <img src="./images/face1.png" id="ImageDe" alt="image d'une face de dé">
+  </div>
+  <div class="col-md-12">
+    <button id="NewGame">Nouvelle partie</button>
+  </div>  
+  <div id="btnPlay">
+      <button id="btnLancer">Lancer</button>
+      <button id="btnSecuriser">Sécuriser</button>
+    </div>
+</div>  
+
+<br>
+<br>
+
+<div class="row">
+  <div class="col-md-12 text-center pt-60">
+    <img span src="./images/M. BURNS.jpeg" id="PlayerTwo" alt="M. Burns">
+    <div class="globalPlayerTwo">
+      <p><i>SCORE M. BURNS</i></p>
+      <p id="GLOBAL">0</p>
+    </div>
+    <div class="roundPlayerTwo">
+      <p class="pRound">Point</p>
+      <div id="roundPlayerTwo">0</div>
+    </div>
+  </div>
+</div>
+-->
+
+
+
+
+
+
+<footer>
+
+  
+ </footer>
+
+<script src="/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" type="text/javascript" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
